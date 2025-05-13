@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://bkoiixu0wc8nt" path="res://src/scripts/scrolling_test.gd" id="1_yrbag"]
 [ext_resource type="Shader" uid="uid://b8d2x4b5my2tx" path="res://src/shaders/gnomonic.gdshader" id="2_jkvvx"]
 [ext_resource type="Texture2D" uid="uid://dgv514qf6e1c4" path="res://src/assets/360.jpg" id="2_mwc1p"]
-[ext_resource type="Script" uid="uid://bnt7dvxwwalvu" path="res://src/scenes/perspective.gd" id="3_6dwqo"]
+[ext_resource type="Script" uid="uid://bnt7dvxwwalvu" path="res://src/scripts/perspective.gd" id="3_6dwqo"]
 [ext_resource type="PackedScene" uid="uid://p50ayogiuyqc" path="res://src/scenes/interactable.tscn" id="3_mwc1p"]
-[ext_resource type="Script" uid="uid://dk4gx2mblf1et" path="res://src/scenes/cursor.gd" id="5_tincr"]
+[ext_resource type="Script" uid="uid://dk4gx2mblf1et" path="res://src/scripts/cursor.gd" id="5_tincr"]
 [ext_resource type="Texture2D" uid="uid://d0dm4r8nu311e" path="res://icon.svg" id="6_tincr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6dwqo"]
