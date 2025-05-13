@@ -1,0 +1,63 @@
+[gd_scene load_steps=10 format=3 uid="uid://de2qks2le3mm8"]
+
+[ext_resource type="Script" uid="uid://bkoiixu0wc8nt" path="res://src/scripts/scrolling_test.gd" id="1_yrbag"]
+[ext_resource type="Shader" uid="uid://b8d2x4b5my2tx" path="res://src/shaders/gnomonic.gdshader" id="2_jkvvx"]
+[ext_resource type="Texture2D" uid="uid://dgv514qf6e1c4" path="res://src/assets/360.jpg" id="2_mwc1p"]
+[ext_resource type="Script" uid="uid://bnt7dvxwwalvu" path="res://src/scenes/perspective.gd" id="3_6dwqo"]
+[ext_resource type="PackedScene" uid="uid://p50ayogiuyqc" path="res://src/scenes/interactable.tscn" id="3_mwc1p"]
+[ext_resource type="Script" uid="uid://dk4gx2mblf1et" path="res://src/scenes/cursor.gd" id="5_tincr"]
+[ext_resource type="Texture2D" uid="uid://d0dm4r8nu311e" path="res://icon.svg" id="6_tincr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6dwqo"]
+shader = ExtResource("2_jkvvx")
+shader_parameter/centerPoint = Vector2(0.5, 0.5)
+shader_parameter/point = Vector2(0, 0)
+shader_parameter/FOV = Vector2(0.9, 0.8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tincr"]
+size = Vector2(12.1429, 13.1429)
+
+[node name="Scrolling" type="Node2D"]
+script = ExtResource("1_yrbag")
+
+[node name="ParkingLot" type="Sprite2D" parent="."]
+position = Vector2(2048, 1024)
+texture = ExtResource("2_mwc1p")
+
+[node name="Interactable" parent="." instance=ExtResource("3_mwc1p")]
+position = Vector2(2728, 916)
+
+[node name="Interactable2" parent="." instance=ExtResource("3_mwc1p")]
+position = Vector2(1497, 672)
+
+[node name="Interactable3" parent="." instance=ExtResource("3_mwc1p")]
+position = Vector2(3354, 672)
+
+[node name="Interactable4" parent="." instance=ExtResource("3_mwc1p")]
+position = Vector2(2048, 1283)
+
+[node name="Perspective" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_6dwqo")
+offset_right = 4096.0
+offset_bottom = 2048.0
+mouse_filter = 2
+script = ExtResource("3_6dwqo")
+fov = Vector2(0.7, 0.5)
+
+[node name="Cursor" type="Area2D" parent="." node_paths=PackedStringArray("perspective")]
+visible = false
+position = Vector2(2728, 852)
+script = ExtResource("5_tincr")
+perspective = NodePath("../Perspective")
+
+[node name="Icon" type="Sprite2D" parent="Cursor"]
+texture = ExtResource("6_tincr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Cursor"]
+scale = Vector2(7, 7)
+shape = SubResource("RectangleShape2D_tincr")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(2048, 1024)
+zoom = Vector2(0.5, 0.5)

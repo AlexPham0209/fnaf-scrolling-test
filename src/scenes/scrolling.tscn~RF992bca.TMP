@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://s6xhp85hyvox"]
+
+[ext_resource type="Texture2D" uid="uid://dgv514qf6e1c4" path="res://src/assets/360.jpg" id="1_42jqa"]
+[ext_resource type="Script" uid="uid://bkoiixu0wc8nt" path="res://src/scripts/scrolling_test.gd" id="1_aehi0"]
+[ext_resource type="Shader" uid="uid://b8d2x4b5my2tx" path="res://src/shaders/gnomonic.gdshader" id="2_l842e"]
+[ext_resource type="Texture2D" uid="uid://busiewshxc5jp" path="res://src/assets/parking_lot.jpg" id="2_yrbag"]
+[ext_resource type="Script" uid="uid://bnt7dvxwwalvu" path="res://src/scenes/perspective.gd" id="4_rctf0"]
+[ext_resource type="Texture2D" uid="uid://d0dm4r8nu311e" path="res://icon.svg" id="6_tincr"]
+[ext_resource type="Script" uid="uid://dk4gx2mblf1et" path="res://src/scenes/interactable.gd" id="7_mwc1p"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xyyn3"]
+shader = ExtResource("2_l842e")
+shader_parameter/centerPoint = Vector2(0.5, 0.5)
+shader_parameter/FOV = Vector2(0.7, 0.75)
+
+[node name="Scrolling" type="Node2D"]
+script = ExtResource("1_aehi0")
+
+[node name="ParkingLot" type="Sprite2D" parent="."]
+position = Vector2(969, 632)
+texture = ExtResource("2_yrbag")
+
+[node name="360" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(969, 632)
+texture = ExtResource("1_42jqa")
+
+[node name="Perspective" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_xyyn3")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1079.0
+offset_top = -392.0
+offset_right = 3017.0
+offset_bottom = 1656.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+script = ExtResource("4_rctf0")
+fov = Vector2(0.6, 0.65)
+
+[node name="Icon" type="Sprite2D" parent="." node_paths=PackedStringArray("perspective")]
+position = Vector2(1130, 632)
+texture = ExtResource("6_tincr")
+script = ExtResource("7_mwc1p")
+perspective = NodePath("../Perspective")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(969, 632)
+zoom = Vector2(0.5, 0.5)
