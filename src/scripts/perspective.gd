@@ -19,7 +19,7 @@ func _ready() -> void:
 	
 
 func _physics_process(delta: float) -> void:
-	var center = Vector2(4096 / 2, 2048 / 2)
+	var center = Vector2(4096, 2048)
 	
 	if not captured:
 		var move = get_global_mouse_position() / Vector2(4096, 2048)
@@ -36,5 +36,5 @@ func _input(event):
 		return
 		
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		cp.x = fposmod(cp.x + event.relative.x * 0.001, 1.0)
-		cp.y = clamp(cp.y + event.relative.y * 0.002, 0.3, 0.7)
+		cp.x = fposmod(cp.x + event.relative.x * (0.001 / 2), 1.0)
+		cp.y = clamp(cp.y + event.relative.y * (0.002 / 2), 0.3, 0.7)

@@ -30,6 +30,7 @@ position = Vector2(2048, 1024)
 texture = ExtResource("2_mwc1p")
 
 [node name="ParkingLot2" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(2048, 1024)
 texture = ExtResource("9_hruyx")
 
