@@ -37,4 +37,4 @@ func _input(event):
 		
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		cp.x = fposmod(cp.x + event.relative.x * 0.001, 1.0)
-		cp.y = clamp(cp.y + event.relative.y * 0.001, 0.3, 0.7)
+		cp.y = clamp(cp.y + event.relative.y * 0.002, 0.3, 0.7)
