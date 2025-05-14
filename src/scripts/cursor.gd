@@ -21,9 +21,19 @@ func _physics_process(delta: float) -> void:
 	var lon = cp.x + atan2((x * sin(c)), ((p * cos(cp.y) * cos(c)) - (y * sin(cp.y) * sin(c))))
 	
 	pos = Vector2((lon / PI + 1.0) * 0.5, (lat / PI_2 + 1.0) * 0.5)
+	
+	if perspective.apply_modifiers:
+		var conversion = Vector2(180.0/self.perspective.zoom.x, 90.0/self.perspective.zoom.y);
+		
+		pos.x *= conversion.x;
+		pos.y *= conversion.y;
+		
+		pos.x -= (conversion.x/2.0)-0.5;
+		pos.y -= (conversion.y/2.0)-0.5;
+	
+	pos = Vector2(fposmod(pos.x, 1.0), fposmod(pos.y, 1.0))
 	pos *= Vector2(4096, 2048)
 	pos += self.perspective.global_position
-	
 	self.global_position = pos
 	
 
