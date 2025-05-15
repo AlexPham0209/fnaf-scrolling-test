@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d0dm4r8nu311e" path="res://icon.svg" id="2_fgiye"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mwc1p"]
-size = Vector2(12, 12.125)
+size = Vector2(16, 16)
 
 [node name="Interactable" type="Area2D"]
 script = ExtResource("1_bdjcv")

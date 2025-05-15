@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://clfg0y1t41m5p"]
+
+[ext_resource type="Script" uid="uid://djp2vcnv412tv" path="res://src/scripts/fnaf_office.gd" id="1_ev7r7"]
+[ext_resource type="Texture2D" uid="uid://2376lvcxsj7n" path="res://src/assets/office.png" id="4_jdqb0"]
+[ext_resource type="PackedScene" uid="uid://p50ayogiuyqc" path="res://src/scenes/interactable.tscn" id="5_i86jr"]
+[ext_resource type="PackedScene" uid="uid://dlfhsp6ectlei" path="res://src/scenes/perspective.tscn" id="6_rlhow"]
+[ext_resource type="PackedScene" uid="uid://br1dsgp4o5fby" path="res://src/scenes/cursor.tscn" id="7_xw7b6"]
+[ext_resource type="Texture2D" uid="uid://d0dm4r8nu311e" path="res://icon.svg" id="8_7vmxe"]
+
+[node name="Office" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_ev7r7")
+
+[node name="Office" type="Sprite2D" parent="."]
+position = Vector2(2046.5, 1017)
+scale = Vector2(1.36633, 1.37467)
+texture = ExtResource("4_jdqb0")
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="Interactable" parent="Interactables" instance=ExtResource("5_i86jr")]
+position = Vector2(1057, 1024)
+
+[node name="Interactable2" parent="Interactables" instance=ExtResource("5_i86jr")]
+position = Vector2(2967, 1011)
+
+[node name="Interactable3" parent="Interactables" instance=ExtResource("5_i86jr")]
+position = Vector2(2048, 1024)
+scale = Vector2(3, 3)
+
+[node name="Perspective" parent="." instance=ExtResource("6_rlhow")]
+max_longitude = 180.0
+max_latitude = 90.0
+wrap = false
+
+[node name="Cursor" parent="." node_paths=PackedStringArray("perspective") instance=ExtResource("7_xw7b6")]
+position = Vector2(2728, 852)
+perspective = NodePath("../Perspective")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(2048, 1024)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("8_7vmxe")
+
+[connection signal="pressed" from="Interactables/Interactable" to="." method="left_door"]
+[connection signal="pressed" from="Interactables/Interactable2" to="." method="right_door"]
+[connection signal="pressed" from="Interactables/Interactable3" to="." method="camera"]

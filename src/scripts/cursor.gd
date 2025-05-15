@@ -1,3 +1,4 @@
+class_name Cursor
 extends Area2D
 
 @export var perspective: Perspective

@@ -1,3 +1,4 @@
+class_name Interactable
 extends Area2D
 
 @onready var sprite: Sprite2D = $Icon
