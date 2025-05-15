@@ -31,7 +31,7 @@ func _physics_process(delta: float) -> void:
 		#center.y = clamp(move.y, 0., 1)
 	
 	self.material.set_shader_parameter('centerPoint', center)
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("show_perspective"):
 		self.visible = not self.visible
 
 func _input(event):

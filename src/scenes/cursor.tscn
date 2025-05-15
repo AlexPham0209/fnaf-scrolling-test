@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://br1dsgp4o5fby"]
+
+[ext_resource type="Script" uid="uid://dk4gx2mblf1et" path="res://src/scripts/cursor.gd" id="1_k326b"]
+[ext_resource type="Texture2D" uid="uid://d0dm4r8nu311e" path="res://icon.svg" id="2_ur25j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tincr"]
+size = Vector2(12.1429, 13.1429)
+
+[node name="Cursor" type="Area2D"]
+process_mode = 1
+visible = false
+script = ExtResource("1_k326b")
+
+[node name="Icon" type="Sprite2D" parent="."]
+texture = ExtResource("2_ur25j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_tincr")

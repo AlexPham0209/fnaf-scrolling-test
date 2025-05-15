@@ -12,6 +12,7 @@ shader_parameter/maxLatitude = 0.0
 shader_parameter/wrap = false
 
 [node name="Perspective" type="ColorRect"]
+process_mode = 1
 visible = false
 material = SubResource("ShaderMaterial_6dwqo")
 offset_right = 4096.0

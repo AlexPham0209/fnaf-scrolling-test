@@ -27,5 +27,9 @@ func _physics_process(delta: float) -> void:
 	pos += perspective.global_position
 	self.global_position = pos
 	
-
+func _input(event: InputEvent) -> void:
+	if not event.is_action_pressed('show_cursor'):
+		return
+	
+	visible = not visible
 	
