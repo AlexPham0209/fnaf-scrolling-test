@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://de2qks2le3mm8"]
+
+[ext_resource type="Script" uid="uid://fni7bks8iqvs" path="res://src/scripts/360_room.gd" id="1_dvpja"]
+[ext_resource type="Texture2D" uid="uid://dgv514qf6e1c4" path="res://src/assets/360.jpg" id="2_pmw8x"]
+[ext_resource type="Texture2D" uid="uid://busiewshxc5jp" path="res://src/assets/parking_lot.jpg" id="3_txsba"]
+[ext_resource type="PackedScene" uid="uid://p50ayogiuyqc" path="res://src/scenes/interactable.tscn" id="4_dkejk"]
+[ext_resource type="PackedScene" uid="uid://dlfhsp6ectlei" path="res://src/scenes/perspective.tscn" id="5_c46gk"]
+[ext_resource type="PackedScene" uid="uid://br1dsgp4o5fby" path="res://src/scenes/cursor.tscn" id="6_185uh"]
+[ext_resource type="Texture2D" uid="uid://d0dm4r8nu311e" path="res://icon.svg" id="7_6hss7"]
+
+[node name="Room" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_dvpja")
+
+[node name="Rooms" type="Node2D" parent="."]
+
+[node name="Room" type="Sprite2D" parent="Rooms"]
+position = Vector2(2048, 1024)
+texture = ExtResource("2_pmw8x")
+
+[node name="ParkingLot" type="Sprite2D" parent="Rooms"]
+visible = false
+position = Vector2(2048, 1024)
+texture = ExtResource("3_txsba")
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="Interactable" parent="Interactables" instance=ExtResource("4_dkejk")]
+position = Vector2(2728, 916)
+
+[node name="Interactable2" parent="Interactables" instance=ExtResource("4_dkejk")]
+position = Vector2(1497, 672)
+
+[node name="Interactable3" parent="Interactables" instance=ExtResource("4_dkejk")]
+position = Vector2(3354, 672)
+
+[node name="Interactable4" parent="Interactables" instance=ExtResource("4_dkejk")]
+position = Vector2(2048, 1283)
+
+[node name="Interactable5" parent="Interactables" instance=ExtResource("4_dkejk")]
+position = Vector2(108, 852)
+
+[node name="Perspective" parent="." instance=ExtResource("5_c46gk")]
+
+[node name="Cursor" parent="." node_paths=PackedStringArray("perspective") instance=ExtResource("6_185uh")]
+position = Vector2(2728, 852)
+perspective = NodePath("../Perspective")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(2048, 1024)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("7_6hss7")
+
+[connection signal="pressed" from="Interactables/Interactable" to="." method="closed_door"]
+[connection signal="pressed" from="Interactables/Interactable4" to="." method="open_curtains"]

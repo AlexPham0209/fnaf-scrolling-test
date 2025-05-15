@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://dc0n6y51tj8fw"]
+
+[ext_resource type="Script" uid="uid://fni7bks8iqvs" path="res://src/scripts/360_room.gd" id="1_5qk60"]
+[ext_resource type="PackedScene" uid="uid://p50ayogiuyqc" path="res://src/scenes/interactable.tscn" id="4_mxxmp"]
+[ext_resource type="PackedScene" uid="uid://dlfhsp6ectlei" path="res://src/scenes/perspective.tscn" id="5_pxwwf"]
+[ext_resource type="PackedScene" uid="uid://br1dsgp4o5fby" path="res://src/scenes/cursor.tscn" id="6_ub0mp"]
+[ext_resource type="Texture2D" uid="uid://d0dm4r8nu311e" path="res://icon.svg" id="7_6t5mr"]
+
+[node name="Room" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_5qk60")
+
+[node name="Rooms" type="Node2D" parent="."]
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="Interactable" parent="Interactables" instance=ExtResource("4_mxxmp")]
+position = Vector2(2728, 916)
+
+[node name="Perspective" parent="." instance=ExtResource("5_pxwwf")]
+
+[node name="Cursor" parent="." node_paths=PackedStringArray("perspective") instance=ExtResource("6_ub0mp")]
+position = Vector2(2728, 852)
+perspective = NodePath("../Perspective")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(2048, 1024)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("7_6t5mr")
+
+[connection signal="pressed" from="Interactables/Interactable" to="." method="closed_door"]
