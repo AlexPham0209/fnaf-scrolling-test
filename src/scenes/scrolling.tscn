@@ -1,24 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://de2qks2le3mm8"]
+[gd_scene load_steps=11 format=3 uid="uid://de2qks2le3mm8"]
 
 [ext_resource type="Script" uid="uid://bkoiixu0wc8nt" path="res://src/scripts/scrolling_test.gd" id="1_yrbag"]
-[ext_resource type="Shader" uid="uid://b8d2x4b5my2tx" path="res://src/shaders/gnomonic.gdshader" id="2_jkvvx"]
 [ext_resource type="Texture2D" uid="uid://dgv514qf6e1c4" path="res://src/assets/360.jpg" id="2_mwc1p"]
-[ext_resource type="Script" uid="uid://bnt7dvxwwalvu" path="res://src/scripts/perspective.gd" id="3_6dwqo"]
 [ext_resource type="PackedScene" uid="uid://p50ayogiuyqc" path="res://src/scenes/interactable.tscn" id="3_mwc1p"]
 [ext_resource type="Texture2D" uid="uid://d365vch0is32f" path="res://src/assets/Animation-0 Direction-0 Frame-0.png" id="3_p08e1"]
 [ext_resource type="Texture2D" uid="uid://2376lvcxsj7n" path="res://src/assets/office.png" id="4_hruyx"]
 [ext_resource type="Script" uid="uid://dk4gx2mblf1et" path="res://src/scripts/cursor.gd" id="5_tincr"]
 [ext_resource type="Texture2D" uid="uid://d0dm4r8nu311e" path="res://icon.svg" id="6_tincr"]
+[ext_resource type="PackedScene" uid="uid://dlfhsp6ectlei" path="res://src/scenes/perspective.tscn" id="8_ls7cf"]
 [ext_resource type="Texture2D" uid="uid://busiewshxc5jp" path="res://src/assets/parking_lot.jpg" id="9_hruyx"]
-[ext_resource type="Texture2D" path="res://src/assets/Heiternplatz_180°_panorama.jpg" id="9_ls7cf"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6dwqo"]
-shader = ExtResource("2_jkvvx")
-shader_parameter/centerPoint = Vector2(0.5, 0.5)
-shader_parameter/FOV = Vector2(0.9, 0.8)
-shader_parameter/maxLongitude = 0.0
-shader_parameter/maxLatitude = 0.0
-shader_parameter/wrap = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tincr"]
 size = Vector2(12.1429, 13.1429)
@@ -26,31 +16,28 @@ size = Vector2(12.1429, 13.1429)
 [node name="Scrolling" type="Node2D"]
 script = ExtResource("1_yrbag")
 
-[node name="Room" type="Sprite2D" parent="."]
+[node name="Rooms" type="Node2D" parent="."]
+
+[node name="Room" type="Sprite2D" parent="Rooms"]
 visible = false
 position = Vector2(2048, 1024)
 texture = ExtResource("2_mwc1p")
 
-[node name="ParkingLot" type="Sprite2D" parent="."]
-visible = false
+[node name="ParkingLot" type="Sprite2D" parent="Rooms"]
 position = Vector2(2048, 1024)
 texture = ExtResource("9_hruyx")
 
-[node name="Heiternplatz180°Panorama" type="Sprite2D" parent="."]
+[node name="Office" type="Sprite2D" parent="Rooms"]
 visible = false
-position = Vector2(2040, 1030.75)
-scale = Vector2(0.447735, 0.602815)
-texture = ExtResource("9_ls7cf")
-
-[node name="Animation-0Direction-0Frame-0" type="Sprite2D" parent="."]
-position = Vector2(2048, 1018)
-scale = Vector2(1.6, 2.86111)
-texture = ExtResource("3_p08e1")
-
-[node name="Office" type="Sprite2D" parent="."]
 position = Vector2(2046.5, 1017)
 scale = Vector2(1.36633, 1.37467)
 texture = ExtResource("4_hruyx")
+
+[node name="Animation-0Direction-0Frame-0" type="Sprite2D" parent="Rooms"]
+visible = false
+position = Vector2(2048, 1018)
+scale = Vector2(1.6, 2.86111)
+texture = ExtResource("3_p08e1")
 
 [node name="Interactables" type="Node2D" parent="."]
 
@@ -69,20 +56,7 @@ position = Vector2(2048, 1283)
 [node name="Interactable5" parent="Interactables" instance=ExtResource("3_mwc1p")]
 position = Vector2(108, 852)
 
-[node name="Perspective" type="ColorRect" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_6dwqo")
-offset_right = 4096.0
-offset_bottom = 2048.0
-mouse_filter = 2
-script = ExtResource("3_6dwqo")
-maxLongitude = 180.0
-maxLatitude = 90.0
-captured = true
-
-[node name="Camera2D" type="Camera2D" parent="Perspective"]
-position = Vector2(2048, 1024)
-zoom = Vector2(0.5, 0.5)
+[node name="Perspective" parent="." instance=ExtResource("8_ls7cf")]
 
 [node name="Cursor" type="Area2D" parent="." node_paths=PackedStringArray("perspective")]
 visible = false
