@@ -36,8 +36,8 @@ vec2 toGnomonic(vec2 uv, vec2 center, vec2 fovScale) {
 void fragment() {
 	vec2 sphericalCoords = toGnomonic(SCREEN_UV, centerPoint, FOV);
 	
-	if (sphericalCoords.x >= 0. && sphericalCoords.x <= 1. && sphericalCoords.y >= 0. && sphericalCoords.y <= 1.)
-		COLOR = textureLod(SCREEN_TEXTURE, wrap ? fract(sphericalCoords) : sphericalCoords, 0.00f);
+	if (wrap || (sphericalCoords.x >= 0. && sphericalCoords.x <= 1. && sphericalCoords.y >= 0. && sphericalCoords.y <= 1.))
+		COLOR = textureLod(SCREEN_TEXTURE, fract(sphericalCoords), 0.00f);
 	else
 		COLOR.rgb = backgroundColor;
 }
