@@ -26,11 +26,11 @@ size = Vector2(12.1429, 13.1429)
 script = ExtResource("1_yrbag")
 
 [node name="Room" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(2048, 1024)
 texture = ExtResource("2_mwc1p")
 
 [node name="ParkingLot2" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(2048, 1024)
 texture = ExtResource("9_hruyx")
 
@@ -66,6 +66,7 @@ zoom = Vector2(60, 20)
 captured = true
 
 [node name="Cursor" type="Area2D" parent="." node_paths=PackedStringArray("perspective")]
+visible = false
 position = Vector2(2728, 852)
 script = ExtResource("5_tincr")
 perspective = NodePath("../Perspective")

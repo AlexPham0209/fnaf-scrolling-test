@@ -17,12 +17,12 @@ func _physics_process(delta: float) -> void:
 	
 	var p = sqrt(x * x + y * y) + 1e-7
 	var c = atan(p)
-
+	
 	var lat = asin(cos(c) * sin(cp.y) + ((y * sin(c) * cos(cp.y)) / p))
 	var lon = cp.x + atan2((x * sin(c)), ((p * cos(cp.y) * cos(c)) - (y * sin(cp.y) * sin(c))))
 	
 	pos = Vector2((lon / PI + 1.0) * 0.5, (lat / PI_2 + 1.0) * 0.5)
-
+	
 	if perspective.apply_modifiers:
 		var conversion = Vector2(180.0/self.perspective.zoom.x, 90.0/self.perspective.zoom.y);
 		

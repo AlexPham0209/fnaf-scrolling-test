@@ -24,8 +24,8 @@ func _physics_process(delta: float) -> void:
 	if not captured:
 		var move = get_global_mouse_position() / Vector2(4096, 2048)
 		cp.x = fposmod(move.x, 1.0)
-		cp.y = clamp(move.y, 0.3, 0.7)
-	#
+		cp.y = clamp(move.y, 0., 1)
+	
 	self.material.set_shader_parameter('centerPoint', cp)
 	
 	if Input.is_action_just_pressed("ui_accept"):
@@ -37,4 +37,5 @@ func _input(event):
 		
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		cp.x = fposmod(cp.x + event.relative.x * (0.001 / 2), 1.0)
-		cp.y = clamp(cp.y + event.relative.y * (0.002 / 2), 0.3, 0.7)
+		#cp.y = clamp(cp.y + event.relative.y * (0.002 / 2), 0.275, 0.725)
+		cp.y = clamp(cp.y + event.relative.y * (0.002 / 2), 0, 1)
