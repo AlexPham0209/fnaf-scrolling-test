@@ -17,7 +17,6 @@ func _ready() -> void:
 	
 	max_longitude = max_longitude * PI/360
 	max_latitude = max_latitude * PI/360
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	self.material.set_shader_parameter('centerPoint', center)
 	self.material.set_shader_parameter('maxLongitude', max_longitude)
