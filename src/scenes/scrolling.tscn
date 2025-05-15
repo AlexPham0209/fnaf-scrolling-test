@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://de2qks2le3mm8"]
+[gd_scene load_steps=9 format=3 uid="uid://de2qks2le3mm8"]
 
 [ext_resource type="Script" uid="uid://djp2vcnv412tv" path="res://src/scripts/scrolling.gd" id="1_hruyx"]
 [ext_resource type="Texture2D" uid="uid://dgv514qf6e1c4" path="res://src/assets/360.jpg" id="2_mwc1p"]
 [ext_resource type="PackedScene" uid="uid://p50ayogiuyqc" path="res://src/scenes/interactable.tscn" id="3_mwc1p"]
-[ext_resource type="Texture2D" uid="uid://d365vch0is32f" path="res://src/assets/Animation-0 Direction-0 Frame-0.png" id="3_p08e1"]
 [ext_resource type="Texture2D" uid="uid://2376lvcxsj7n" path="res://src/assets/office.png" id="4_hruyx"]
 [ext_resource type="Texture2D" uid="uid://d0dm4r8nu311e" path="res://icon.svg" id="6_tincr"]
 [ext_resource type="PackedScene" uid="uid://br1dsgp4o5fby" path="res://src/scenes/cursor.tscn" id="8_hruyx"]
@@ -17,25 +16,18 @@ script = ExtResource("1_hruyx")
 [node name="Rooms" type="Node2D" parent="."]
 
 [node name="Room" type="Sprite2D" parent="Rooms"]
-visible = false
 position = Vector2(2048, 1024)
 texture = ExtResource("2_mwc1p")
 
 [node name="ParkingLot" type="Sprite2D" parent="Rooms"]
+visible = false
 position = Vector2(2048, 1024)
 texture = ExtResource("9_hruyx")
 
 [node name="Office" type="Sprite2D" parent="Rooms"]
-visible = false
 position = Vector2(2046.5, 1017)
 scale = Vector2(1.36633, 1.37467)
 texture = ExtResource("4_hruyx")
-
-[node name="Animation-0Direction-0Frame-0" type="Sprite2D" parent="Rooms"]
-visible = false
-position = Vector2(2048, 1018)
-scale = Vector2(1.6, 2.86111)
-texture = ExtResource("3_p08e1")
 
 [node name="Interactables" type="Node2D" parent="."]
 
@@ -55,6 +47,9 @@ position = Vector2(2048, 1283)
 position = Vector2(108, 852)
 
 [node name="Perspective" parent="." instance=ExtResource("8_ls7cf")]
+max_longitude = 180.0
+max_latitude = 90.0
+wrap = false
 
 [node name="Cursor" parent="." node_paths=PackedStringArray("perspective") instance=ExtResource("8_hruyx")]
 position = Vector2(2728, 852)
@@ -64,3 +59,6 @@ perspective = NodePath("../Perspective")
 position = Vector2(2048, 1024)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("6_tincr")
+
+[connection signal="pressed" from="Interactables/Interactable" to="." method="closed_door"]
+[connection signal="pressed" from="Interactables/Interactable4" to="." method="open_curtains"]
