@@ -1,15 +1,12 @@
 shader_type canvas_item;
 uniform vec2 centerPoint;
-uniform vec2 point;
 uniform vec2 FOV;
-uniform bool applyModifiers = false;
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 
-uniform float zoomX = 65;
-uniform float zoomY = 30;
+uniform float maxLongitude;
+uniform float maxLatitude;
 
-const float PI_2 = PI * 0.5;
-const float PI2 = PI * 2.0;
+uniform bool wrap;
 
 // Turns equirectangular image into rectilinear/gnomonic image.
 // https://www.shadertoy.com/view/ls2cz3
@@ -17,8 +14,8 @@ const float PI2 = PI * 2.0;
 // https://blog.nitishmutha.com/equirectangular/360degree/2017/06/12/How-to-project-Equirectangular-image-to-rectilinear-view.html
 vec2 toGnomonic(vec2 uv, vec2 center, vec2 fovScale) {
 	//Converting it from a range of [0, 1] to [-PI, PI/2].  Converting it to radian form.
-	vec2 cp = (center * 2.0f - 1.0f) * vec2(PI, PI_2);
-	vec2 sphCoords = (uv * 2.0f - 1.0f) * fovScale * vec2(PI, PI_2);
+	vec2 cp = (center * 2.0f - 1.0f) * vec2(maxLongitude, maxLatitude);
+	vec2 sphCoords = (uv * 2.0f - 1.0f) * fovScale * vec2(maxLongitude, maxLatitude);
 	float x = sphCoords.x;
 	float y = sphCoords.y;
 	
@@ -31,25 +28,11 @@ vec2 toGnomonic(vec2 uv, vec2 center, vec2 fovScale) {
 	float lat = asin(cos(c) * sin(cp.y) + (y * sin(c) * cos(cp.y))/p);
 	
 	//Converting the spherical coordinates to ranges [0, 1].
-	vec2 output = vec2((lon / PI + 1.0f) * 0.5, (lat / PI_2 + 1.0f) * 0.5);
+	vec2 output = vec2((lon / maxLongitude + 1.0f) * 0.5, (lat / maxLatitude + 1.0f) * 0.5);
 	return output;
 }
 
 void fragment() {
 	vec2 sphericalCoords = toGnomonic(SCREEN_UV, centerPoint, FOV);
-	vec2 conversion;
-
-	if (applyModifiers) {
-		conversion.x = 180.0/zoomX;
-		conversion.y = 90.0/zoomY;
-
-		sphericalCoords.x *= conversion.x;
-	    sphericalCoords.y *= conversion.y;
-
-	    sphericalCoords.x -= (conversion.x/2.0)-0.5;
-	    sphericalCoords.y -= (conversion.y/2.0)-0.5;
-	}
-	
-	//Prevents stretching textures
-	COLOR = textureLod(SCREEN_TEXTURE, fract(sphericalCoords), 0.00f);
+	COLOR = textureLod(SCREEN_TEXTURE, wrap ? fract(sphericalCoords) : sphericalCoords, 0.00f);
 }

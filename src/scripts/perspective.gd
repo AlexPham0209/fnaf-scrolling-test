@@ -1,9 +1,10 @@
 extends ColorRect
 
+@export var maxLongitude: float = 360
+@export var maxLatitude: float = 180
+@export var center: Vector2 = Vector2(0.5, 0.5)
 @export var fov: Vector2 = Vector2(0.7, 0.75)
-@export var zoom: Vector2 = Vector2(90, 30)
-@export var cp: Vector2 = Vector2(0.5, 0.5)
-@export var apply_modifiers: bool = false
+@export var wrap: bool = false
 @export var captured = false
 
 func _ready() -> void:
@@ -11,22 +12,23 @@ func _ready() -> void:
 
 	if captured:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	self.material.set_shader_parameter('centerPoint', cp)
-	self.material.set_shader_parameter('zoomX', zoom.x)
-	self.material.set_shader_parameter('zoomY', zoom.y)
-	self.material.set_shader_parameter('FOV', fov)
-	self.material.set_shader_parameter('applyModifiers', apply_modifiers)
+	
+	maxLongitude = maxLongitude * PI/360
+	maxLatitude = maxLatitude * PI/360
+	
+	self.material.set_shader_parameter('centerPoint', center)
+	self.material.set_shader_parameter('maxLongitude', maxLongitude)
+	self.material.set_shader_parameter('maxLatitude', maxLatitude)
+	self.material.set_shader_parameter('wrap', wrap)
 	
 
-func _physics_process(delta: float) -> void:
-	var center = Vector2(4096, 2048)
-	
+func _physics_process(delta: float) -> void:	
 	if not captured:
-		var move = get_global_mouse_position() / Vector2(4096, 2048)
-		cp.x = fposmod(move.x, 1.0)
-		cp.y = clamp(move.y, 0., 1)
+		var move = get_global_mouse_position() / self.size
+		center.x = fposmod(move.x, 1.0)
+		center.y = clamp(move.y, 0., 1)
 	
-	self.material.set_shader_parameter('centerPoint', cp)
+	self.material.set_shader_parameter('centerPoint', center)
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		self.visible = not self.visible
@@ -36,6 +38,5 @@ func _input(event):
 		return
 		
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		cp.x = fposmod(cp.x + event.relative.x * (0.001 / 2), 1.0)
-		#cp.y = clamp(cp.y + event.relative.y * (0.002 / 2), 0.275, 0.725)
-		cp.y = clamp(cp.y + event.relative.y * (0.002 / 2), 0, 1)
+		center.x = fposmod(center.x + event.relative.x * (0.001 / 2), 1.0)
+		center.y = clamp(center.y + event.relative.y * (0.002 / 2), 0, 1)
