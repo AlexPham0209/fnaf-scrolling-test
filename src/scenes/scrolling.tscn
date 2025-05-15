@@ -1,6 +1,5 @@
-[gd_scene load_steps=11 format=3 uid="uid://de2qks2le3mm8"]
+[gd_scene load_steps=10 format=3 uid="uid://de2qks2le3mm8"]
 
-[ext_resource type="Script" uid="uid://bkoiixu0wc8nt" path="res://src/scripts/scrolling_test.gd" id="1_yrbag"]
 [ext_resource type="Texture2D" uid="uid://dgv514qf6e1c4" path="res://src/assets/360.jpg" id="2_mwc1p"]
 [ext_resource type="PackedScene" uid="uid://p50ayogiuyqc" path="res://src/scenes/interactable.tscn" id="3_mwc1p"]
 [ext_resource type="Texture2D" uid="uid://d365vch0is32f" path="res://src/assets/Animation-0 Direction-0 Frame-0.png" id="3_p08e1"]
@@ -14,7 +13,6 @@
 size = Vector2(12.1429, 13.1429)
 
 [node name="Scrolling" type="Node2D"]
-script = ExtResource("1_yrbag")
 
 [node name="Rooms" type="Node2D" parent="."]
 

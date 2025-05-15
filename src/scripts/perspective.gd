@@ -1,7 +1,8 @@
+class_name Perspective
 extends ColorRect
 
-@export var maxLongitude: float = 360
-@export var maxLatitude: float = 180
+@export var max_longitude: float = 360
+@export var max_latitude: float = 180
 @export var center: Vector2 = Vector2(0.5, 0.5)
 @export var fov: Vector2 = Vector2(0.7, 0.75)
 
@@ -14,13 +15,13 @@ extends ColorRect
 func _ready() -> void:
 	self.visible = true
 	
-	maxLongitude = maxLongitude * PI/360
-	maxLatitude = maxLatitude * PI/360
+	max_longitude = max_longitude * PI/360
+	max_latitude = max_latitude * PI/360
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	self.material.set_shader_parameter('centerPoint', center)
-	self.material.set_shader_parameter('maxLongitude', maxLongitude)
-	self.material.set_shader_parameter('maxLatitude', maxLatitude)
+	self.material.set_shader_parameter('maxLongitude', max_longitude)
+	self.material.set_shader_parameter('maxLatitude', max_latitude)
 	self.material.set_shader_parameter('wrap', wrap)
 	
 
