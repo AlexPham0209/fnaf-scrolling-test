@@ -2,6 +2,7 @@ shader_type canvas_item;
 uniform vec2 centerPoint;
 uniform vec2 FOV;
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+uniform vec3 backgroundColor;
 
 uniform float maxLongitude;
 uniform float maxLatitude;
@@ -34,5 +35,9 @@ vec2 toGnomonic(vec2 uv, vec2 center, vec2 fovScale) {
 
 void fragment() {
 	vec2 sphericalCoords = toGnomonic(SCREEN_UV, centerPoint, FOV);
-	COLOR = textureLod(SCREEN_TEXTURE, wrap ? fract(sphericalCoords) : sphericalCoords, 0.00f);
+	
+	if (sphericalCoords.x >= 0. && sphericalCoords.x <= 1. && sphericalCoords.y >= 0. && sphericalCoords.y <= 1.)
+		COLOR = textureLod(SCREEN_TEXTURE, wrap ? fract(sphericalCoords) : sphericalCoords, 0.00f);
+	else
+		COLOR.rgb = backgroundColor;
 }

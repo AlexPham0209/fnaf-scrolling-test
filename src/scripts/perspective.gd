@@ -9,6 +9,7 @@ extends ColorRect
 @export var x_bound: Vector2 = Vector2(0.0, 1.0)
 @export var y_bound: Vector2 = Vector2(0.0, 1.0)
 @export var mouse_sensitivity: Vector2 = Vector2(0.001, 0.002)
+@export var background_color: Color = Color.BLACK
 
 @export var wrap: bool = false
 
@@ -21,6 +22,7 @@ func _ready() -> void:
 	self.material.set_shader_parameter('centerPoint', center)
 	self.material.set_shader_parameter('maxLongitude', max_longitude)
 	self.material.set_shader_parameter('maxLatitude', max_latitude)
+	self.material.set_shader_parameter('backgroundColor', Vector3(background_color.r, background_color.g, background_color.b))
 	self.material.set_shader_parameter('wrap', wrap)
 	
 
