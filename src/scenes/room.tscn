@@ -19,7 +19,6 @@ position = Vector2(2048, 1024)
 texture = ExtResource("2_pmw8x")
 
 [node name="ParkingLot" type="Sprite2D" parent="Rooms"]
-visible = false
 position = Vector2(2048, 1024)
 texture = ExtResource("3_txsba")
 

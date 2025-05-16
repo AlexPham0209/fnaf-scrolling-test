@@ -19,7 +19,7 @@ vec2 toGnomonic(vec2 uv, vec2 center, vec2 fovScale) {
 	vec2 sphCoords = (uv * 2.0f - 1.0f) * fovScale * vec2(maxLongitude, maxLatitude);
 	float x = sphCoords.x;
 	float y = sphCoords.y;
-	
+
 	//Gets the length of the vector and find its angle of elevation.
 	float p = sqrt(x * x + y * y);
 	float c = atan(p);
@@ -27,7 +27,7 @@ vec2 toGnomonic(vec2 uv, vec2 center, vec2 fovScale) {
 	//Convert to spherical coordinates (azimuth, elevation).  Thus, mapping the x and y in the texture to the sphere.
 	float lon = cp.x + atan(x * sin(c), p * cos(cp.y) * cos(c) - y * sin(cp.y) * sin(c));
 	float lat = asin(cos(c) * sin(cp.y) + (y * sin(c) * cos(cp.y))/p);
-	
+
 	//Converting the spherical coordinates to ranges [0, 1].
 	vec2 output = vec2((lon / maxLongitude + 1.0f) * 0.5, (lat / maxLatitude + 1.0f) * 0.5);
 	return output;
@@ -35,7 +35,7 @@ vec2 toGnomonic(vec2 uv, vec2 center, vec2 fovScale) {
 
 void fragment() {
 	vec2 sphericalCoords = toGnomonic(SCREEN_UV, centerPoint, FOV);
-	
+
 	if (wrap || (sphericalCoords.x >= 0. && sphericalCoords.x <= 1. && sphericalCoords.y >= 0. && sphericalCoords.y <= 1.))
 		COLOR = textureLod(SCREEN_TEXTURE, fract(sphericalCoords), 0.00f);
 	else

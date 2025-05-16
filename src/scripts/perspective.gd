@@ -36,7 +36,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("show_perspective"):
 		self.visible = not self.visible
 
-func _input(event):
+func _input(event) -> void:
 	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED or event is not InputEventMouseMotion:
 		return
 	
