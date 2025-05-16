@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cyy8g4w7xw3p4"]
+[gd_scene load_steps=9 format=3 uid="uid://cyy8g4w7xw3p4"]
 
 [ext_resource type="Texture2D" uid="uid://2376lvcxsj7n" path="res://src/assets/office.png" id="1_udsug"]
 [ext_resource type="Shader" uid="uid://b83v6f5jjlqmp" path="res://src/shaders/camera.gdshader" id="2_hc2j0"]
+[ext_resource type="Texture2D" uid="uid://dgv514qf6e1c4" path="res://src/assets/360.jpg" id="2_iovnc"]
 [ext_resource type="Shader" uid="uid://b3octxgh1yx8k" path="res://src/shaders/roll_line.gdshader" id="3_8xmya"]
+[ext_resource type="Shader" uid="uid://plq4q747oh13" path="res://src/shaders/quantization.gdshader" id="5_no7gn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iovnc"]
 shader = ExtResource("3_8xmya")
@@ -17,27 +19,47 @@ shader_parameter/noiseAmplitude = 2.5
 shader_parameter/start = 0.0
 shader_parameter/stepSize = 2.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_38bu1"]
+shader = ExtResource("5_no7gn")
+shader_parameter/numColors = 8
+
 [node name="ShaderTest" type="Node2D"]
 
 [node name="Office" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(1024.5, 511)
 scale = Vector2(0.682333, 0.684)
 texture = ExtResource("1_udsug")
+
+[node name="360" type="Sprite2D" parent="."]
+position = Vector2(1001, 491)
+texture = ExtResource("2_iovnc")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 0
 
 [node name="RollLine" type="ColorRect" parent="CanvasLayer"]
+visible = false
 material = SubResource("ShaderMaterial_iovnc")
 offset_right = 2048.0
 offset_bottom = 1024.0
 
 [node name="BackBufferCopy" type="BackBufferCopy" parent="CanvasLayer"]
+visible = false
 position = Vector2(1024.5, 511)
 scale = Vector2(10.235, 5.13)
 copy_mode = 2
 
 [node name="ChromicAbberation" type="ColorRect" parent="CanvasLayer"]
+visible = false
 material = SubResource("ShaderMaterial_8xmya")
+offset_right = 2048.0
+offset_bottom = 1024.0
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="CanvasLayer"]
+copy_mode = 2
+
+[node name="Quantization" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_38bu1")
 offset_right = 2048.0
 offset_bottom = 1024.0
