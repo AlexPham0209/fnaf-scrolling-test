@@ -1,23 +1,43 @@
-[gd_scene load_steps=4 format=3 uid="uid://cyy8g4w7xw3p4"]
+[gd_scene load_steps=6 format=3 uid="uid://cyy8g4w7xw3p4"]
 
 [ext_resource type="Texture2D" uid="uid://2376lvcxsj7n" path="res://src/assets/office.png" id="1_udsug"]
 [ext_resource type="Shader" uid="uid://b83v6f5jjlqmp" path="res://src/shaders/camera.gdshader" id="2_hc2j0"]
+[ext_resource type="Shader" uid="uid://b3octxgh1yx8k" path="res://src/shaders/roll_line.gdshader" id="3_8xmya"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iovnc"]
+shader = ExtResource("3_8xmya")
+shader_parameter/scrollPosition = 0.5
+shader_parameter/scrollWidth = 0.05
+shader_parameter/frequency = 0.25
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8xmya"]
 shader = ExtResource("2_hc2j0")
 shader_parameter/noiseScale = 100.0
 shader_parameter/noiseAmplitude = 2.5
 shader_parameter/start = 0.0
-shader_parameter/stepSize = 5.0
+shader_parameter/stepSize = 2.0
 
-[node name="CameraTest" type="Node2D"]
+[node name="ShaderTest" type="Node2D"]
 
 [node name="Office" type="Sprite2D" parent="."]
 position = Vector2(1024.5, 511)
 scale = Vector2(0.682333, 0.684)
 texture = ExtResource("1_udsug")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="RollLine" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_iovnc")
+offset_right = 2048.0
+offset_bottom = 1024.0
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="CanvasLayer"]
+position = Vector2(1024.5, 511)
+scale = Vector2(10.235, 5.13)
+copy_mode = 2
+
+[node name="ChromicAbberation" type="ColorRect" parent="CanvasLayer"]
 material = SubResource("ShaderMaterial_8xmya")
 offset_right = 2048.0
 offset_bottom = 1024.0

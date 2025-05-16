@@ -1,9 +1,8 @@
 shader_type canvas_item;
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
-uniform float noiseScale = 100.0;
-uniform float noiseAmplitude = 1.0;
-uniform float start = 5.0;
-uniform float stepSize = 2.0;
+uniform float scrollPosition = 0.5;
+uniform float scrollWidth = 0.1;
+uniform float frequency = 0.1;
 
 vec2 random(vec2 uv){
     uv = vec2( dot(uv, vec2(127.1,311.7) ),
@@ -23,20 +22,25 @@ float noise(vec2 uv) {
                      dot( random(uv_index + vec2(1.0,1.0) ), uv_fract - vec2(1.0,1.0) ), blur.x), blur.y) + 0.5;
 }
 
+float rollLine(vec2 uv) {
+	float pos = mod(scrollPosition + TIME * frequency, 1.0 + scrollWidth / 2. + 1.);
+	
+	float offset = noise(uv * 20.0); 
+	float top = smoothstep(pos - scrollWidth / 2., pos - scrollWidth / 2. + 0.01, uv.y + sin(uv.x * 30. + TIME * 10.0) * (offset * 0.01) + 0.1);
+	float bottom = smoothstep(pos + scrollWidth / 2., pos + scrollWidth / 2. + 0.01, uv.y + sin(uv.x * 40. + TIME * 8.5) * (offset * 0.01) + 0.1);
+	float output = top - bottom;
+	
+	return output;
+}
+
 void fragment() {
 	// Called for every pixel the material is visible on.
 	vec2 uv = SCREEN_UV;
-	vec3 color = vec3(0.);
-	float offset = noise(SCREEN_UV * noiseScale + TIME * 2.0);
-
-	color.r = textureLod(SCREEN_TEXTURE, vec2(uv.x - ((start + stepSize) - offset * noiseAmplitude) * SCREEN_PIXEL_SIZE.x, uv.y), 0.0f).r;
-	color.g = textureLod(SCREEN_TEXTURE, vec2(uv.x - ((start + stepSize * 2.) - offset * noiseAmplitude) * SCREEN_PIXEL_SIZE.x, uv.y), 0.0f).g;
-	color.b = textureLod(SCREEN_TEXTURE, vec2(uv.x - ((start + stepSize * 3.) - offset * noiseAmplitude) * SCREEN_PIXEL_SIZE.x, uv.y), 0.0f).b;
-
-	COLOR.rgb = color;
+	float rollLine = rollLine(uv);
+	float noise = noise(uv * 50.0);
+	
+	uv -= (0.005 + noise * 0.01) * rollLine;
+	
+	COLOR.rgb = uv.x >= 0. ? textureLod(SCREEN_TEXTURE, uv, 0.0f).rgb : vec3(0.);
 }
 
-//void light() {
-//	// Called for every pixel for every light affecting the CanvasItem.
-//	// Uncomment to replace the default light processing function with this one.
-//}
